@@ -52,8 +52,8 @@ RUN apt-get update \
     && docker-php-ext-install ${EXTENSION} \
     && docker-php-ext-configure gd \
         --enable-gd-native-ttf \
-        --with-freetype-dir=/usr/include/ \ 
-        --with-jpeg-dir=/usr/include/ \    
+        --with-freetype-dir=/usr/include/ \
+        --with-jpeg-dir=/usr/include/ \
     && rm -rf /etc/apache2/sites-*/ \
     && chown -R php:php /var/run/apache2 /var/log/apache2 /var/lock/apache2 /var/lib/apache2 \
     && apt-get purge -y --auto-remove \
@@ -73,7 +73,7 @@ RUN a2enmod rewrite ssl && \
 
 USER php
 
-EXPOSE 8080
+EXPOSE 8080 4433
 
 WORKDIR /home/php/app
 
