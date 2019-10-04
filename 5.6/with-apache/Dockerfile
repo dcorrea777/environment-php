@@ -6,11 +6,8 @@ ENV APACHE_RUN_USER php
 ENV APACHE_RUN_GROUP php
 ENV APACHE_DOCUMENT_ROOT /home/php/app/public
 ENV APACHE_SERVER_NAME localhost
-
 ENV APPLICATION \
-    git \
-    openssh-client \
-    rsync
+    git
 
 ENV PHP_DEPS \
     libjpeg-dev \
