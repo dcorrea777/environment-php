@@ -63,7 +63,7 @@ RUN a2enmod rewrite ssl && \
 
 USER php
 
-EXPOSE 8080
+EXPOSE 8080 4433
 
 WORKDIR /home/php/app
 
