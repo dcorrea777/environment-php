@@ -1,11 +1,14 @@
-FROM php:7.3-apache-buster
+FROM php:7.3-apache-stretch
 
 LABEL maintainer="danilosilva87@gmail.com"
 
 ENV APACHE_RUN_USER php
 ENV APACHE_RUN_GROUP php
-ENV APACHE_DOCUMENT_ROOT /home/php/app/public
-ENV APACHE_SERVER_NAME localhost
+ENV APPLICATION \
+    git \
+    wget \
+    curl \
+    unzip
 
 ENV PHP_DEPS \
     libpng-dev \
@@ -31,7 +34,8 @@ ENV EXTENSION \
     tokenizer \
     xsl \
     gd \
-    mbstring
+    mbstring \
+    pcntl
 
 RUN groupadd --gid 1000 php \
     && useradd --uid 1000 --gid php -m php
@@ -56,12 +60,14 @@ COPY sites-enabled/*.conf /etc/apache2/sites-enabled/
 RUN ln -sf /dev/stdout /var/log/apache2/access.log
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
-RUN a2enmod rewrite ssl
+WORKDIR /home/php/app
+
+RUN a2enmod rewrite ssl \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && chown php.php -R /home/php
 
 USER php
 
 EXPOSE 8080 4433
-
-WORKDIR /home/php/app
 
 CMD ["apache2-foreground"]
