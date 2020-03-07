@@ -1,6 +1,6 @@
 ### Environment PHP
 
-Atualmente esse é um repositório com versões de imagem docker em PHP para uso pessoal.
+Atualmente esse é um repositório com versões de imagem docker do PHP para uso pessoal.  
 As versões disponiveis são: 7.3 e 7.4
 
 # Versão 7.3 with apache
@@ -49,3 +49,5 @@ Extensões disponiveis nessa versão do PHP:
 * Zend OPcache
 
 # Versão 7.4 with apache
+
+...
