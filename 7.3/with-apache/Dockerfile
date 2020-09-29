@@ -4,13 +4,16 @@ LABEL maintainer="danilosilva87@gmail.com"
 
 ENV APACHE_RUN_USER php
 ENV APACHE_RUN_GROUP php
-ENV APPLICATION \
-    git \
-    wget \
-    curl \
-    unzip
+ENV APACHE_SERVER_NAME localhost
+ENV APACHE_DOCUMENT_ROOT /home/php/app/public
+ENV APACHE_LOG_DIR /var/log/apache2
 
-ENV PHP_DEPS \
+RUN set -x \
+    && groupadd --gid 1000 php \
+    && useradd --uid 1000 --gid php -m php
+
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends \
     libpng-dev \
     libjpeg-dev \
     libssl-dev \
@@ -21,7 +24,7 @@ ENV PHP_DEPS \
     libxslt1-dev \
     libzip-dev
 
-ENV EXTENSION \
+ENV EXTENSION_PHP \
     zip \
     pdo \
     pdo_mysql \
@@ -37,12 +40,7 @@ ENV EXTENSION \
     mbstring \
     pcntl
 
-RUN groupadd --gid 1000 php \
-    && useradd --uid 1000 --gid php -m php
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ${PHP_DEPS} ${APPLICATION} \
-    && docker-php-ext-install ${EXTENSION} \
+RUN docker-php-ext-install ${EXTENSION_PHP} \
     && docker-php-ext-configure gd \
         --with-gd \
         --with-jpeg-dir \
