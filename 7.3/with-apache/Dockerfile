@@ -63,7 +63,6 @@ RUN ln -sf /dev/stderr /var/log/apache2/error.log
 WORKDIR /home/php/app
 
 RUN a2enmod rewrite ssl \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && chown php.php -R /home/php
 
 USER php
